@@ -6,16 +6,25 @@
   "author": "jared@netrivet.com",
   "license": "MIT",
   "sideEffects": false,
+  "scripts": {
+    "test": "npx jest .",
+    "ts:check": "npx tsc --noEmit -p .",
+    "lint": "npx eslint '**/*.{ts,tsx,js}'",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "npx prettier \"**/*.{ts,tsx,js}\" --write",
+    "format:check": "npx prettier \"**/*.{ts,tsx,js}\" --check"
+  },
   "devDependencies": {
+    "@friends-library/eslint-plugin": "1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-no-only-tests": "^2.4.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "jest": ">=25.0.0",
     "prettier": "^2.1.2",
     "ts-jest": ">=25.0.0",
     "typescript": ">=3.9.5"
-  },
-  "scripts": {
-    "test": "npx jest .",
-    "ts:check": "npx tsc --noEmit -p .",
-    "format": "npx prettier \"**/*.{ts,tsx,js}\" --write",
-    "format:check": "npx prettier \"**/*.{ts,tsx,js}\" --check"
   }
 }
