@@ -16,7 +16,8 @@
     "format": "fldev format"
   },
   "devDependencies": {
-    "@friends-library/dev": "4.0.0",
+    "@friends-library/dev": "4.0.1",
     "@types/jest": "^26.0.14"
-  }
+  },
+  "dependencies": {}
 }
