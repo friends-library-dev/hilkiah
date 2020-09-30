@@ -1,6 +1,6 @@
 {
   "name": "@friends-library/hilkiah",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "finds scripture references embedded in text",
   "main": "./dist/index.js",
   "browser": "./src/index.ts",
@@ -16,10 +16,10 @@
     "ts:check": "fldev ts:check",
     "format": "fldev format",
     "compile": "fldev ts:compile",
-    "prepublish": "npm run compile"
+    "prepublishOnly": "npm run compile"
   },
   "devDependencies": {
-    "@friends-library/dev": "4.0.2",
+    "@friends-library/dev": "4.0.4",
     "@types/jest": "^26.0.14"
   }
 }
