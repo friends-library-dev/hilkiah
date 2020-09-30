@@ -2,7 +2,8 @@
   "name": "@friends-library/hilkiah",
   "version": "1.0.0",
   "description": "finds scripture references embedded in text",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
+  "browser": "./src/index.ts",
   "repository": "github:friends-library-dev/hilkiah",
   "author": "jared@netrivet.com",
   "license": "MIT",
@@ -13,11 +14,12 @@
     "lint": "fldev lint",
     "lint:fix": "fldev lint:fix",
     "ts:check": "fldev ts:check",
-    "format": "fldev format"
+    "format": "fldev format",
+    "compile": "fldev ts:compile",
+    "prepublish": "npm run compile"
   },
   "devDependencies": {
-    "@friends-library/dev": "4.0.1",
+    "@friends-library/dev": "4.0.2",
     "@types/jest": "^26.0.14"
-  },
-  "dependencies": {}
+  }
 }
