@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "browser": "./src/index.ts",
   "repository": "github:friends-library-dev/hilkiah",
-  "author": "jared@netrivet.com",
+  "author": "Jared Henderson <jared@netrivet.com>",
   "license": "MIT",
   "sideEffects": false,
   "scripts": {
@@ -19,6 +19,6 @@
     "prepublishOnly": "npm run compile"
   },
   "devDependencies": {
-    "@friends-library/dev": "^4.1.10"
+    "@friends-library/dev": "^4.1.13"
   }
 }
