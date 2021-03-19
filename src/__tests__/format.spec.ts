@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from '@jest/globals';
 import { format } from '../format';
 import { Ref } from '../find';
 
@@ -11,6 +12,11 @@ describe(`format`, () => {
       verses: [{ chapter: 1, verse: 1 }],
       match: `Gal. i. 1`,
     } as Ref;
+  });
+
+  it(`can handle chaper-only ref`, () => {
+    ref.verses = [{ chapter: 1 }];
+    expect(format(ref)).toBe(`Gal. 1`);
   });
 
   it(`should format a single verse so good`, () => {
