@@ -19,6 +19,6 @@
     "prepublishOnly": "npm run compile"
   },
   "devDependencies": {
-    "@friends-library/dev": "^4.1.15"
+    "@friends-library/dev": "~4.3.0"
   }
 }

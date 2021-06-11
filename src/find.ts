@@ -117,7 +117,7 @@ export function find(str: string): Ref[] {
     let match: RegExpExecArray | null = null;
     while ((match = exp.exec(str))) {
       const chapter = toNumber(match[1]) as number;
-      if (chapter == 0) {
+      if (chapter === 0) {
         continue;
       }
       const ref = extractRef(book.name, chapter, match);
