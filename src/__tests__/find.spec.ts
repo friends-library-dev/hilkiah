@@ -1,6 +1,33 @@
+import { describe, it, expect, test } from '@jest/globals';
 import { find } from '..';
 
 describe(`find()`, () => {
+  it(`can find just a chapter reference`, () => {
+    const found = find(`In Jer. Xxxi`);
+    expect(found[0].book).toBe(`Jeremiah`);
+    expect(found[0].verses[0].chapter).toBe(31);
+    expect(found[0].verses[0].verse).toBeUndefined();
+    expect(found).toHaveLength(1);
+  });
+
+  const chapterOnlyCases: Array<[string, number, string]> = [
+    [`2 Corinthians`, 4, `2 Cor. iv`],
+    [`2 Corinthians`, 5, `2 Cor. v`],
+    [`2 Samuel`, 24, `2 Sam. xxiv`],
+    [`1 Corinthians`, 1, `1 Cor. i.`],
+    [`1 Corinthians`, 15, `1 Cor. xv.`],
+    [`1 Timothy`, 1, `speaketh of 1 Tim. i. And`],
+    [`2 Kings`, 5, `in 2 Kings v. throughout`],
+  ];
+
+  test.each(chapterOnlyCases)(`finds %s %s from %s`, (book, chapter, input) => {
+    const found = find(input);
+    expect(found[0].book).toBe(book);
+    expect(found[0].verses[0].chapter).toBe(chapter);
+    expect(found[0].verses[0].verse).toBeUndefined();
+    expect(found).toHaveLength(1);
+  });
+
   it(`returns empty array if no refs found`, () => {
     const found = find(`blah blah`);
 
@@ -114,14 +141,31 @@ describe(`find()`, () => {
     expect(found).toHaveLength(0);
   });
 
-  it(`does not find Ester ref in Ecclesiastes`, () => {
+  it(`does not find Esther ref in Ecclesiastes`, () => {
     const found = find(`Solomon in Ecclesiastes 5:1-3 are`);
 
     expect(found[0].book).toBe(`Ecclesiastes`);
     expect(found).toHaveLength(1);
   });
 
+  it(`handles Acts ref without returning undefined`, () => {
+    const found = find(`acts iv. 2-3`);
+    expect(found).toHaveLength(1);
+    expect(found[0].book).toBe(`Acts`);
+    expect(found[0].verses).toMatchObject([
+      {
+        chapter: 4,
+        verse: 2,
+      },
+      {
+        chapter: 4,
+        verse: 3,
+      },
+    ]);
+  });
+
   const individualVerses: [string, number, number, string][] = [
+    [`Revelation`, 17, 18, `Revelations xvii. 18`],
     [`Matthew`, 17, 20, `Matt. xvii. 20`],
     [`1 Corinthians`, 1, 24, `1 Cor. i. 24.`],
     [`Matthew`, 11, 29, `ls,\`" (Matt. xi. 29) the`],
@@ -184,6 +228,9 @@ describe(`find()`, () => {
     [`Luke`, 9, 23, `me.\`" (Luke ix. 23.) The`],
     [`Galatians`, 2, 20, `(Gal. ii. 20.) This `],
     [`Galatians`, 5, 24, `lusts.\`" (Gal. v. 24.)`],
+    [`1 Peter`, 2, 13, `1 Pet. ii. 13`],
+    [`Acts`, 3, 4, `Acts. iii. 4`],
+    [`1 Timothy`, 4, 13, `etc. 1 Tim. iv. 13. And`],
     // ['BOOK', 999, 111, 'CONTEXT'],
   ];
 
@@ -197,6 +244,13 @@ describe(`find()`, () => {
   });
 
   const multiRefs: [string, [string, string, number, number][]][] = [
+    [
+      `And acts ii. 17. Joel. ii. 28. God`,
+      [
+        [`Joel. ii. 28`, `Joel`, 2, 28],
+        [`acts ii. 17`, `Acts`, 2, 17],
+      ],
+    ],
     [
       `included; (see Hosea, xii. 6; Isai. xl. 31; Psalm xl. 1;) a duty`,
       [
@@ -244,6 +298,12 @@ describe(`find()`, () => {
       expect(refs[i].verses[0].chapter).toBe(expected[i][2]);
       expect(refs[i].verses[0].verse).toBe(expected[i][3]);
     }
+  });
+
+  const falsePositives: Array<[string]> = [[`So, I went`]];
+
+  test.each(falsePositives)(`should not find ref in "%s"`, (input) => {
+    expect(find(input)).toHaveLength(0);
   });
 
   const multiVerses: [string, { [k: string]: any }][] = [

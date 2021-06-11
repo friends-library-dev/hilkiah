@@ -26,6 +26,10 @@ export function format({ book, verses, contiguous, match }: Ref, opts = {}): str
     str = book;
   }
 
+  if (verses.length === 1 && !verses[0].verse) {
+    return `${str} ${verses[0].chapter}`;
+  }
+
   str += ` ${verses[0].chapter}:${verses[0].verse}`;
   if (verses.length === 1) {
     return str;

@@ -13,7 +13,7 @@ export interface Ref {
   contiguous: boolean;
   verses: {
     chapter: number;
-    verse: number;
+    verse?: number;
   }[];
   match: string;
   position: {
@@ -73,7 +73,23 @@ function extractRef(book: string, chapter: number, match: RegExpExecArray): Ref 
   });
 
   if (ref.position.end === -1) {
-    return null;
+    // try to grab chapter-only refs, but be more selective
+    ref.match = match[0];
+
+    // weed out stuff like `is, 1`
+    const firstChar = ref.match[0];
+    if (!firstChar.match(/^\d$/) && firstChar.toLowerCase() === firstChar) {
+      return null;
+    }
+
+    // So, I - is not a ref to Song of Solomon 1
+    if (ref.match.match(/^So\b/)) {
+      return null;
+    }
+
+    ref.verses.push({ chapter });
+    ref.position.end = ref.position.start + ref.match.length;
+    return ref;
   }
 
   const { position } = ref;
@@ -96,13 +112,18 @@ export function find(str: string): Ref[] {
       .map((abbrev) => abbrev.replace(`.`, `\\.`))
       .join(`|`);
 
-    pattern = `(?:${pattern})(?:\\.|,)? (${ARAB}|${ROM})`;
+    pattern = `\\b(?:${pattern})(?:\\.|,)? (${ARAB}|${ROM})\\b`;
     const exp = new RegExp(pattern, `gi`);
     let match: RegExpExecArray | null = null;
     while ((match = exp.exec(str))) {
       const chapter = toNumber(match[1]) as number;
+      if (chapter == 0) {
+        continue;
+      }
       const ref = extractRef(book.name, chapter, match);
-      if (ref) refs.push(ref);
+      if (ref) {
+        refs.push(ref);
+      }
     }
   });
   return refs;

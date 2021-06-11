@@ -1796,7 +1796,15 @@
   {
     "name": "Revelation",
     "short": "Rev",
-    "abbreviations": ["Revel", "Rev", "Re", "Apocalypse", "Apocal", "Apoc"],
+    "abbreviations": [
+      "Revel",
+      "Rev",
+      "Re",
+      "Apocalypse",
+      "Apocal",
+      "Apoc",
+      "Revelations"
+    ],
     "chapters": 22,
     "chapter": {
       "1": 20,
