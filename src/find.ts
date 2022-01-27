@@ -46,7 +46,20 @@ function absorbRight(ref: Ref, input: string): Ref {
   };
 }
 
+function isValidChapter(book: string, chapter: number): boolean {
+  if (chapter < 1) return false;
+  const bookData = bookJson.find((b) => b.name === book);
+  if (!bookData || chapter > bookData.chapters) {
+    return false;
+  }
+  return true;
+}
+
 function extractRef(book: string, chapter: number, match: RegExpExecArray): Ref | null {
+  if (!isValidChapter(book, chapter)) {
+    return null;
+  }
+
   const start = match.index + match[0].length;
   const context = match.input.substring(start, start + 25);
 
@@ -75,12 +88,6 @@ function extractRef(book: string, chapter: number, match: RegExpExecArray): Ref 
   if (ref.position.end === -1) {
     // try to grab chapter-only refs, but be more selective
     ref.match = match[0];
-
-    // make sure it's a valid chapter, so `Amos D.` doesn't become `Amos 500`
-    const bookData = bookJson.find((b) => b.name === ref.book);
-    if (!bookData || chapter > bookData.chapters) {
-      return null;
-    }
 
     // weed out stuff like `is, 1`
     const firstChar = ref.match[0];

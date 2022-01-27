@@ -42,8 +42,11 @@ describe(`find()`, () => {
 
   it(`returns empty array if no refs found`, () => {
     const found = find(`blah blah`);
-
     expect(found).toEqual([]);
+  });
+
+  it(`does not find invalid chapter of book`, () => {
+    expect(find(`In Isaiah 67:19, we read`)).toEqual([]);
   });
 
   it(`does not find Song of Solomon ref inside of Thessalonians ref`, () => {
