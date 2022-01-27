@@ -16,9 +16,10 @@
     "ts:check": "fldev ts:check",
     "format": "fldev format",
     "compile": "fldev ts:compile",
-    "prepublishOnly": "npm run compile"
+    "prepublishOnly": "npm run compile",
+    "npub:precheck": "fldev ci"
   },
   "devDependencies": {
-    "@friends-library/dev": "~4.3.1"
+    "@friends-library/dev": "~4.5.0"
   }
 }

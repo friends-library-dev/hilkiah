@@ -28,6 +28,18 @@ describe(`find()`, () => {
     expect(found).toHaveLength(1);
   });
 
+  const invalidChapterOnlyCases = [
+    `Foobar is, 1`,
+    `So, I went`,
+    `Amos LXX`,
+    `Amos D.`,
+    `Amos C.`,
+  ];
+
+  test.each(invalidChapterOnlyCases)(`does not find ref in %s`, (input) => {
+    expect(find(input)).toEqual([]);
+  });
+
   it(`returns empty array if no refs found`, () => {
     const found = find(`blah blah`);
 

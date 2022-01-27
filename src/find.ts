@@ -76,6 +76,12 @@ function extractRef(book: string, chapter: number, match: RegExpExecArray): Ref 
     // try to grab chapter-only refs, but be more selective
     ref.match = match[0];
 
+    // make sure it's a valid chapter, so `Amos D.` doesn't become `Amos 500`
+    const bookData = bookJson.find((b) => b.name === ref.book);
+    if (!bookData || chapter > bookData.chapters) {
+      return null;
+    }
+
     // weed out stuff like `is, 1`
     const firstChar = ref.match[0];
     if (!firstChar.match(/^\d$/) && firstChar.toLowerCase() === firstChar) {
