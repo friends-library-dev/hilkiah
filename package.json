@@ -1,6 +1,6 @@
 {
   "name": "@friends-library/hilkiah",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "finds scripture references embedded in text",
   "main": "./dist/index.js",
   "browser": "./src/index.ts",
