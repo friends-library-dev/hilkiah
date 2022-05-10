@@ -315,7 +315,7 @@ describe(`find()`, () => {
     }
   });
 
-  const falsePositives: Array<[string]> = [[`So, I went`]];
+  const falsePositives: Array<[string]> = [[`So, I went`], [`Am I not in danger?`]];
 
   test.each(falsePositives)(`should not find ref in "%s"`, (input) => {
     expect(find(input)).toHaveLength(0);

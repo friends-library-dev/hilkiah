@@ -81,5 +81,5 @@ export function incorrectAmbiguous(ref: Ref, input: string): boolean {
     incorrect(`Genesis`, /^ges /, `jud`),
     incorrect(`Amos`, /^am\. /, `j`),
     incorrect(`Romans`, /^rom /, `f`),
-  ].reduce((result, fn) => result || fn(ref, input), false as boolean);
+  ].reduce<boolean>((result, fn) => result || fn(ref, input), false);
 }

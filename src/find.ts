@@ -100,6 +100,11 @@ function extractRef(book: string, chapter: number, match: RegExpExecArray): Ref 
       return null;
     }
 
+    // Am I... should not be converted to Amos 1
+    if (ref.match.match(/^Am I\b/)) {
+      return null;
+    }
+
     ref.verses.push({ chapter });
     ref.position.end = ref.position.start + ref.match.length;
     return ref;
